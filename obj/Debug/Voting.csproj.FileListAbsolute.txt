@@ -1,1 +1,9 @@
 F:\Website\My Site\Voting\Voting\bin\Debug\Voting.exe.config
+F:\Website\My Site\Voting\Voting\obj\Debug\Voting.csprojResolveAssemblyReference.cache
+F:\Website\My Site\Voting\Voting\obj\Debug\Voting.Form1.resources
+F:\Website\My Site\Voting\Voting\obj\Debug\Voting.Properties.Resources.resources
+F:\Website\My Site\Voting\Voting\obj\Debug\Voting.csproj.GenerateResource.Cache
+F:\Website\My Site\Voting\Voting\bin\Debug\Voting.exe
+F:\Website\My Site\Voting\Voting\bin\Debug\Voting.pdb
+F:\Website\My Site\Voting\Voting\obj\Debug\Voting.exe
+F:\Website\My Site\Voting\Voting\obj\Debug\Voting.pdb
