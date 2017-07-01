@@ -10,9 +10,8 @@ using System.Windows.Forms;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.IO;
-using System.Drawing;
 using System.Windows.Forms.DataVisualization.Charting;
-
+using System.Diagnostics;
 
 namespace Voting
 {
@@ -381,6 +380,25 @@ namespace Voting
 
             f.Controls.Add(chart);
             f.ShowDialog();
+        }
+
+        private void printToFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // print dialog then print it ?
+            ProcessStartInfo info = new ProcessStartInfo();
+            info.Verb = "print";
+            info.FileName = @"D:\output.pdf";
+            info.CreateNoWindow = true;
+            info.WindowStyle = ProcessWindowStyle.Hidden;
+
+            Process p = new Process();
+            p.StartInfo = info;
+            p.Start();
+
+            p.WaitForInputIdle();
+            System.Threading.Thread.Sleep(3000);
+            if (false == p.CloseMainWindow())
+                p.Kill();
         }
     }
 }

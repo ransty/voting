@@ -10,6 +10,10 @@ using System.Windows.Forms;
 
 namespace Voting
 {
+    /**
+     * Custom Controller class for displaying the results of each round to the screen.
+     * 
+     **/
     public partial class CandidateController : UserControl
     {
         public CandidateController()

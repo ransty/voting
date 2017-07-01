@@ -38,6 +38,7 @@
             this.winnerLabel = new System.Windows.Forms.Label();
             this.removeBtn = new System.Windows.Forms.Button();
             this.candidateController = new Voting.CandidateController();
+            this.printToFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,7 +57,8 @@
             // 
             this.importToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.importToolStripMenuItem1,
-            this.exportToolStripMenuItem});
+            this.exportToolStripMenuItem,
+            this.printToFileToolStripMenuItem});
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
             this.importToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.importToolStripMenuItem.Text = "File";
@@ -64,14 +66,14 @@
             // importToolStripMenuItem1
             // 
             this.importToolStripMenuItem1.Name = "importToolStripMenuItem1";
-            this.importToolStripMenuItem1.Size = new System.Drawing.Size(110, 22);
+            this.importToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.importToolStripMenuItem1.Text = "Import";
             this.importToolStripMenuItem1.Click += new System.EventHandler(this.importToolStripMenuItem1_Click);
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exportToolStripMenuItem.Text = "Export";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
@@ -86,7 +88,7 @@
             // pieChartToolStripMenuItem
             // 
             this.pieChartToolStripMenuItem.Name = "pieChartToolStripMenuItem";
-            this.pieChartToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pieChartToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.pieChartToolStripMenuItem.Text = "Pie Chart";
             this.pieChartToolStripMenuItem.Click += new System.EventHandler(this.pieChartToolStripMenuItem_Click);
             // 
@@ -125,6 +127,13 @@
             this.candidateController.Size = new System.Drawing.Size(159, 271);
             this.candidateController.TabIndex = 3;
             // 
+            // printToFileToolStripMenuItem
+            // 
+            this.printToFileToolStripMenuItem.Name = "printToFileToolStripMenuItem";
+            this.printToFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.printToFileToolStripMenuItem.Text = "Print to File";
+            this.printToFileToolStripMenuItem.Click += new System.EventHandler(this.printToFileToolStripMenuItem_Click);
+            // 
             // VoteForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -158,6 +167,7 @@
         private CandidateController candidateController;
         private System.Windows.Forms.Label winnerLabel;
         private System.Windows.Forms.Button removeBtn;
+        private System.Windows.Forms.ToolStripMenuItem printToFileToolStripMenuItem;
     }
 }
 

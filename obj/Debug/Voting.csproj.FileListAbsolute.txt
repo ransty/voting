@@ -16,3 +16,13 @@ D:\My Documents\voting-master\voting-master\obj\Debug\Voting.csproj.GenerateReso
 D:\My Documents\voting-master\voting-master\obj\Debug\Voting.exe
 D:\My Documents\voting-master\voting-master\obj\Debug\Voting.pdb
 D:\My Documents\voting-master\voting-master\obj\Debug\Voting.VoteForm.resources
+D:\My Documents\voting\bin\Debug\Voting.exe.config
+D:\My Documents\voting\obj\Debug\Voting.exe
+D:\My Documents\voting\obj\Debug\Voting.pdb
+D:\My Documents\voting\bin\Debug\Voting.exe
+D:\My Documents\voting\bin\Debug\Voting.pdb
+D:\My Documents\voting\obj\Debug\Voting.csprojResolveAssemblyReference.cache
+D:\My Documents\voting\obj\Debug\Voting.VoteForm.resources
+D:\My Documents\voting\obj\Debug\Voting.Properties.Resources.resources
+D:\My Documents\voting\obj\Debug\Voting.CandidateController.resources
+D:\My Documents\voting\obj\Debug\Voting.csproj.GenerateResource.Cache
