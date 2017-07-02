@@ -18,6 +18,9 @@ namespace Voting
     public partial class VoteForm : Form
     {
 
+        /**
+         * Instance Variables
+         **/
         static public string[] cand;
         List<Vote> VotingRoll;
         Boolean VotingOver;
@@ -25,7 +28,13 @@ namespace Voting
         List<String[]> rounds;
         List<int> CuttedCand;
         int[] currentVotes;
+        // Declare the PrintDocument object.
+        private System.Drawing.Printing.PrintDocument docToPrint =
+            new System.Drawing.Printing.PrintDocument();
 
+        /**
+         * Constructor
+         **/
         public VoteForm()
         {
             InitializeComponent();
@@ -43,9 +52,12 @@ namespace Voting
         }
 
         #region Import CSV File
+        /**
+         *  Uses the Import button on the menuStrip. 
+         *  Opens a FileDialog for the user to select a file to import, CSV only.
+         **/
         private void importToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            // Displays an OpenFileDialog so the user can select a Cursor.  
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "CSV Files|*.CSV";
             openFileDialog1.Title = "Select a File";
@@ -64,48 +76,41 @@ namespace Voting
                             cand[i].Replace("'", "");
                         }
                         int[] votes = new int[cand.Length];
-                        Console.WriteLine("Number of Cands: " + votes.Length);
+                        //Console.WriteLine("Number of Cands: " + votes.Length);
                         // Now we gonna keep track of votes
                         string line;
                         // Read the stream to a string
                         while ((line = sr.ReadLine()) != null)
                         {
-
-
                             ///Grab 
-
                             // So if we are splitting this line, first split is cand[0], second is cand[1] etc....
                             string[] split = line.Split(',');
 
                             int[] VoteInt = Array.ConvertAll(split, int.Parse);
 
                             VotingRoll.Add(new Vote(cand, VoteInt));
-
                         }
-
-
+                        countBtn.Enabled = true;
+                        removeBtn.Enabled = true;
+                        
                     }
                 }
                 catch (Exception ec)
                 {
-                    Console.WriteLine("The file could not be read:");
+                    MessageBox.Show("The file could not be read:");
                     Console.WriteLine(ec.Message);
                 }
             }
         }
-
         #endregion
 
-        private void export()
-        {
-
-        }
-
-
-
+        /**
+         * Calculate the current round when the button COUNT is pressed.
+         * Takes no parameters as it uses the Vote object that is stored when importing.
+         **/
         private int cal()// Did some one win, who cuts
         {
-
+            barChartToolStripMenuItem.Enabled = true;
             switch (cand.Length)
             {
                 case 1:
@@ -250,6 +255,9 @@ namespace Voting
             return lowIndex;
         }
 
+        /**
+         * Determines which candidate has to be cut from the current round
+         **/
         private void CutCand(int cut)
         {
             for (int i = 0; i < VotingRoll.Count; i++)
@@ -264,6 +272,9 @@ namespace Voting
             CuttedCand.Add(cut);
         }
 
+        /**
+         * Count button, has a saftey check to ensure that we don't cut out too many people or stop the program early
+         **/
         private void button1_Click(object sender, EventArgs e)
         {
             int candToBeCut = -1;
@@ -275,7 +286,7 @@ namespace Voting
                 if (VotingOver)
                 {
                     winnerLabel.Text = "The winner is + " + WinningCand;
-                    button1.Enabled = false;
+                    countBtn.Enabled = false;
                 }
             }
             if (!VotingOver && cand != null && candToBeCut != -1)
@@ -284,12 +295,15 @@ namespace Voting
             }
         }
 
+        /**
+         * Export to CSV file.
+         **/
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Stream myStream;
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
-            saveFileDialog1.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
+            saveFileDialog1.Filter = "CSV Files|*.CSV";
             saveFileDialog1.FilterIndex = 2;
             saveFileDialog1.RestoreDirectory = true;
 
@@ -329,6 +343,9 @@ namespace Voting
             }
         }
 
+        /**
+         *  Remove invalid votes
+         **/
         private void removeBtn_Click(object sender, EventArgs e)
         {
 
@@ -348,11 +365,17 @@ namespace Voting
             MessageBox.Show("Removed a total of " + toBeRemoved.Count + " invalid votes", "Invalid Votes");
         }
 
+        /**
+         * Bar Chart button on menuStrip underneath Graph
+         */
         private void pieChartToolStripMenuItem_Click(object sender, EventArgs e)
         {
             generateChart();
         }
 
+        /**
+         *  Generates a bar chart modal based on the current round
+         **/
         private void generateChart()
         {
             Form f = new Form();
@@ -382,23 +405,72 @@ namespace Voting
             f.ShowDialog();
         }
 
+        #region Print
+        /**
+         * Print file button on menuStrip, brings up printdialog
+         **/
         private void printToFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // print dialog then print it ?
-            ProcessStartInfo info = new ProcessStartInfo();
-            info.Verb = "print";
-            info.FileName = @"D:\output.pdf";
-            info.CreateNoWindow = true;
-            info.WindowStyle = ProcessWindowStyle.Hidden;
+            printDialog.AllowSomePages = true;
 
-            Process p = new Process();
-            p.StartInfo = info;
-            p.Start();
+            // Show the help button.
+            printDialog.ShowHelp = true;
+            printDialog.Document = docToPrint;
 
-            p.WaitForInputIdle();
-            System.Threading.Thread.Sleep(3000);
-            if (false == p.CloseMainWindow())
-                p.Kill();
+            DialogResult result = printDialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                docToPrint.Print();
+            }
         }
+
+        /**
+         * Method used to print the document
+         **/
+        private void document_PrintPage(object sender,
+            System.Drawing.Printing.PrintPageEventArgs e)
+        {
+
+            string line = "Round";
+            for (int i = 0; i < cand.Length; i++)
+            {
+                line += cand[i] + "\n";
+            }
+            // 
+            string tempLine = "";
+
+            for (int j = 0; j < rounds.Count; j++)
+            {
+                tempLine = "";
+                String[] CurrentRound = rounds.ElementAt(j);
+
+                for (int eachRound = 0; eachRound < CurrentRound.Length; eachRound++)
+                {
+                    if (eachRound != 0) { tempLine += ","; }
+                    tempLine += CurrentRound[eachRound] + "\n";
+                }
+            }
+
+            System.Drawing.Font printFont = new System.Drawing.Font
+                ("Arial", 35, System.Drawing.FontStyle.Regular);
+
+            // Draw the content.
+            e.Graphics.DrawString(line, printFont,
+                System.Drawing.Brushes.Black, 10, 10);
+            e.Graphics.DrawString(tempLine, printFont, System.Drawing.Brushes.Black, 10, 10);
+        }
+        #endregion
+
+        #region Print Preview
+        /**
+         * Unimplemented Print Preview
+         **/
+        private void printPreviewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+
+        }
+        #endregion
     }
 }
